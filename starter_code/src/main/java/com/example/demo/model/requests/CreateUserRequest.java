@@ -1,17 +1,17 @@
 package com.example.demo.model.requests;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
+import javax.validation.constraints.Size;
+
+@Data
 public class CreateUserRequest {
-
-	@JsonProperty
+	@Size(min = 4)
 	private String username;
 
-	public String getUsername() {
-		return username;
-	}
+	@Size(min = 4)
+	private String password;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	@Size(min = 4)
+	private String confirmPassword;
 }

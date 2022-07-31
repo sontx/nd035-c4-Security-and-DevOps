@@ -12,10 +12,15 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
 	@Id
@@ -26,36 +31,26 @@ public class User {
 	@Column(nullable = false, unique = true)
 	@JsonProperty
 	private String username;
-	
+
+	@Column(nullable = false)
+	@JsonProperty
+	private String password;
+
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
 	@JsonIgnore
     private Cart cart;
-	
-	public Cart getCart() {
-		return cart;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return id == user.id;
 	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	
-	
 }
